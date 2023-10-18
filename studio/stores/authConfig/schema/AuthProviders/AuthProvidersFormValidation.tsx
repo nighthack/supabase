@@ -847,6 +847,12 @@ const EXTERNAL_PROVIDER_GOOGLE = {
         'Comma separated list of client IDs of Android apps, One Tap or Chrome extensions that are allowed to log in to your project.',
       type: 'string',
     },
+    EXTERNAL_GOOGLE_SKIP_NONCE_CHECK: {
+      title: 'Skip nonce checks',
+      description:
+        "Allows ID tokens with any nonce to be accepted, which is less secure. Useful in situations where you don't have access to the nonce used to issue the ID token, such with React Native on iOS.",
+      type: 'boolean',
+    },
   },
   validationSchema: object().shape({
     EXTERNAL_GOOGLE_ENABLED: boolean().required(),
