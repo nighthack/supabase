@@ -29,6 +29,8 @@
   --border-secondary: var(--colors-gray-dark-400);
   --border-muted: var(--colors-gray-dark-400);
   --border-default: var(--colors-gray-dark-500);
+  --border-hover: var(--colors-gray-dark-700);
+  --border-strong: var(--colors-gray-dark-800);
   --background-overlay-hover: var(--colors-gray-dark-500);
   --background-overlay-default: var(--colors-gray-dark-300);
   --background-surface-300: var(--colors-gray-dark-500);
