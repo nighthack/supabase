@@ -4,7 +4,6 @@ import { products } from 'shared-data'
 import { IconBarChart, IconFileText, IconList, IconSettings } from 'ui'
 
 import { Route } from 'components/ui/ui.types'
-import { useFlag } from 'hooks'
 import { BASE_PATH, IS_PLATFORM, PROJECT_STATUS } from 'lib/constants'
 import { ProjectBase } from 'types'
 
@@ -50,16 +49,18 @@ export const generateToolRoutes = (
     },
   ]
 }
-export const generateProductRoutes = (ref?: string, project?: ProjectBase): Route[] => {
-  // this function is called on every render even though doesn't have a hook name (starts with use)
-  // eslint-disable-next-line react-hooks/rules-of-hooks
-  const realtimeDashboard = useFlag('realtimeDashboard')
+export const generateProductRoutes = (
+  ref?: string,
+  project?: ProjectBase,
+  features?: { auth?: boolean; edgeFunctions?: boolean; storage?: boolean; realtime?: boolean }
+): Route[] => {
   const isProjectBuilding = project?.status === PROJECT_STATUS.COMING_UP
   const buildingUrl = `/project/${ref}/building`
 
   const authEnabled = features?.auth ?? true
   const edgeFunctionsEnabled = features?.edgeFunctions ?? true
   const storageEnabled = features?.storage ?? true
+  const realtimeEnabled = features?.realtime ?? true
 
   return [
     {
@@ -166,7 +167,7 @@ export const generateProductRoutes = (ref?: string, project?: ProjectBase): Rout
           },
         ]
       : []),
-    ...(IS_PLATFORM && realtimeDashboard
+    ...(IS_PLATFORM && realtimeEnabled
       ? [
           {
             key: 'realtime',

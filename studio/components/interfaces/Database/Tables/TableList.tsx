@@ -8,6 +8,7 @@ import { useProjectContext } from 'components/layouts/ProjectLayout/ProjectConte
 import NoSearchResults from 'components/to-be-cleaned/NoSearchResults'
 import Table from 'components/to-be-cleaned/Table'
 import AlertError from 'components/ui/AlertError'
+import SchemaSelector from 'components/ui/SchemaSelector'
 import { GenericSkeletonLoader } from 'components/ui/ShimmeringLoader'
 import { useSchemasQuery } from 'data/database/schemas-query'
 import { useTablesQuery } from 'data/tables/tables-query'
@@ -93,65 +94,32 @@ const TableList = ({
     <div className="space-y-4">
       <h3 className="mb-1 text-xl text-foreground">Database Tables</h3>
 
-      <div className="">
-        <div className="">
-          <div className="w-[260px]">
-            {isLoadingSchemas && <ShimmeringLoader className="!py-4" />}
-            {isSuccessSchemas && (
-              <Listbox
-                size="small"
-                value={snap.selectedSchemaName}
-                onChange={snap.setSelectedSchemaName}
-                icon={isLocked && <IconLock size={14} strokeWidth={2} />}
-              >
-                <Listbox.Option
-                  disabled
-                  key="normal-schemas"
-                  value="normal-schemas"
-                  label="Schemas"
-                >
-                  <p className="text-sm">Schemas</p>
-                </Listbox.Option>
-                {openSchemas.map((schema) => (
-                  <Listbox.Option
-                    key={schema.id}
-                    value={schema.name}
-                    label={schema.name}
-                    addOnBefore={() => <span className="text-foreground-lighter">schema</span>}
-                  >
-                    <span className="text-foreground text-sm">{schema.name}</span>
-                  </Listbox.Option>
-                ))}
-                <Listbox.Option
-                  disabled
-                  key="protected-schemas"
-                  value="protected-schemas"
-                  label="Protected schemas"
-                >
-                  <p className="text-sm">Protected schemas</p>
-                </Listbox.Option>
-                {protectedSchemas.map((schema) => (
-                  <Listbox.Option
-                    key={schema.id}
-                    value={schema.name}
-                    label={schema.name}
-                    addOnBefore={() => <span className="text-foreground-lighter">schema</span>}
-                  >
-                    <span className="text-foreground text-sm">{schema.name}</span>
-                  </Listbox.Option>
-                ))}
-              </Listbox>
-            )}
-          </div>
-          <div>
-            <Input
-              size="small"
-              placeholder="Filter tables"
-              value={filterString}
-              onChange={(e: any) => setFilterString(e.target.value)}
-              icon={<IconSearch size="tiny" />}
-            />
-          </div>
+      <div className="flex items-center justify-between">
+        <div className="flex items-center space-x-4">
+          <SchemaSelector
+            className="w-[260px]"
+            size="small"
+            showError={false}
+            selectedSchemaName={snap.selectedSchemaName}
+            onSelectSchema={snap.setSelectedSchemaName}
+          />
+          <Input
+            size="small"
+            className="w-64"
+            placeholder="Search for a table"
+            value={filterString}
+            onChange={(e: any) => setFilterString(e.target.value)}
+            icon={<IconSearch size="tiny" />}
+          />
+        </div>
+        <div>
+          <Input
+            size="small"
+            placeholder="Filter tables"
+            value={filterString}
+            onChange={(e: any) => setFilterString(e.target.value)}
+            icon={<IconSearch size="tiny" />}
+          />
         </div>
 
         {!isLocked && (
