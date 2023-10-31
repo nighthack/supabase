@@ -99,7 +99,6 @@ const ProjectLayout = ({
         </Head>
         <div className="flex h-full">
           {/* Left-most navigation side bar to access products */}
-          {!hideIconBar && <NavigationBar />}
           {/* Product menu bar */}
           {!showPausedState && (
             <MenuBarWrapper isLoading={isLoading} productMenu={productMenu}>

@@ -5,7 +5,7 @@ import 'styles/code.scss'
 import 'styles/contextMenu.scss'
 import 'styles/date-picker.scss'
 import 'styles/editor.scss'
-import 'styles/graphiql-base.scss'
+// import 'styles/graphiql-base.scss'
 import 'styles/grid.scss'
 import 'styles/main.scss'
 import 'styles/monaco.scss'
@@ -32,7 +32,6 @@ import Head from 'next/head'
 import { useEffect, useMemo, useRef, useState } from 'react'
 import toast from 'react-hot-toast'
 // @ts-ignore
-import Prism from 'prism-react-renderer/prism'
 import ConsentToast from 'ui/src/components/ConsentToast'
 import PortalToast from 'ui/src/layout/PortalToast'
 
@@ -53,7 +52,6 @@ import { StoreProvider } from 'hooks'
 import useAutoAuthRedirect from 'hooks/misc/useAutoAuthRedirect'
 import { AuthProvider } from 'lib/auth'
 import { BASE_PATH, IS_PLATFORM, LOCAL_STORAGE_KEYS } from 'lib/constants'
-import { dart } from 'lib/constants/prism'
 import { ProfileProvider } from 'lib/profile'
 import { useAppStateSnapshot } from 'state/app-state'
 import { RootStore } from 'stores'
@@ -64,7 +62,7 @@ dayjs.extend(customParseFormat)
 dayjs.extend(utc)
 dayjs.extend(timezone)
 dayjs.extend(relativeTime)
-dart(Prism)
+
 
 if (IS_PLATFORM && process.env.NEXT_PUBLIC_ENVIRONMENT === 'staging') {
   // [Joshen] For staff only to debug internal issues
@@ -150,6 +148,7 @@ function CustomApp({ Component, pageProps }: AppPropsWithLayout) {
     },
     [supabase]
   )
+  console.log("this is page porps",{pageProps})
 
   return (
     <QueryClientProvider client={queryClient}>

@@ -53,6 +53,7 @@ function useAutoAuthRedirect(queryClient: QueryClient) {
     const hasReturnTo = searchParams.has('returnTo')
     const hasNext = searchParams.has('next')
     const shouldRedirect = hasReturnTo || hasNext
+    console.log("inside useAutoAuth")
 
     if (!shouldRedirect) {
       // If there's no returnTo or next, then we don't need to do anything
