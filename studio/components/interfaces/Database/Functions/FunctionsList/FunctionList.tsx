@@ -106,7 +106,7 @@ const FunctionList = ({
                         </Button>
                       </DropdownMenuTrigger>
                       <DropdownMenuContent side="left">
-                        {isApiDocumentAvailable && (
+                        {/* {isApiDocumentAvailable && (
                           <DropdownMenuItem
                             className="space-x-2"
                             onClick={() => router.push(`/project/${projectRef}/api?rpc=${x.name}`)}
@@ -114,7 +114,7 @@ const FunctionList = ({
                             <IconFileText size="tiny" />
                             <p>Client API docs</p>
                           </DropdownMenuItem>
-                        )}
+                        )} */}
                         <DropdownMenuItem className="space-x-2" onClick={() => editFunction(x)}>
                           <IconEdit3 size="tiny" />
                           <p>Edit function</p>
