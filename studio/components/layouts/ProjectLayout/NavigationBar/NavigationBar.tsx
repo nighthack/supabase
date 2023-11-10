@@ -76,7 +76,7 @@ const NavigationBar = () => {
       ].join(' ')}
     >
       <ul className="flex flex-col space-y-2">
-        {(!navLayoutV2 || !IS_PLATFORM) && (
+        {/* {(!navLayoutV2 || !IS_PLATFORM) && (
           <Link href={IS_PLATFORM ? '/projects' : `/project/${projectRef}`}>
             <a className="block">
               <img
@@ -86,8 +86,8 @@ const NavigationBar = () => {
               />
             </a>
           </Link>
-        )}
-        <NavigationIconButton
+        )} */}
+        {/* <NavigationIconButton
           isActive={isUndefined(activeRoute) && !isUndefined(router.query.ref)}
           route={{
             key: 'HOME',
@@ -95,7 +95,7 @@ const NavigationBar = () => {
             icon: <IconHome size={18} strokeWidth={2} />,
             link: `/project/${projectRef}`,
           }}
-        />
+        /> */}
         <div className="bg-scale-500 h-px w-full" />
         {toolRoutes.map((route) => (
           <NavigationIconButton
@@ -114,17 +114,17 @@ const NavigationBar = () => {
           />
         ))}
         <div className="h-px w-full bg-scale-500"></div>
-        {otherRoutes.map((route) => (
+        {/* {otherRoutes.map((route) => (
           <NavigationIconButton
             key={route.key}
             route={route}
             isActive={activeRoute === route.key}
           />
-        ))}
+        ))} */}
       </ul>
       {!navLayoutV2 && (
         <ul className="flex flex-col space-y-4 items-center">
-          {isNewAPIDocsEnabled && (
+          {/* {isNewAPIDocsEnabled && (
             <Tooltip.Root delayDuration={0}>
               <Tooltip.Trigger asChild>
                 <Button
@@ -152,8 +152,8 @@ const NavigationBar = () => {
                 </Tooltip.Content>
               </Tooltip.Portal>
             </Tooltip.Root>
-          )}
-          {IS_PLATFORM && (
+          )} */}
+          {/* {IS_PLATFORM && (
             <Tooltip.Root delayDuration={0}>
               <Tooltip.Trigger asChild>
                 <Button
@@ -186,7 +186,7 @@ const NavigationBar = () => {
                 </Tooltip.Content>
               </Tooltip.Portal>
             </Tooltip.Root>
-          )}
+          )} */}
           <DropdownMenu>
             <DropdownMenuTrigger>
               <Button asChild type="text" size="tiny">
@@ -196,7 +196,7 @@ const NavigationBar = () => {
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent side="right" align="start">
-              {IS_PLATFORM && (
+              {/* {IS_PLATFORM && (
                 <>
                   <Link href="/account/me">
                     <DropdownMenuItem key="header" className="space-x-2">
@@ -217,7 +217,7 @@ const NavigationBar = () => {
                   )}
                   <DropdownMenuSeparator />
                 </>
-              )}
+              )} */}
               <DropdownMenuLabel>Theme</DropdownMenuLabel>
               <DropdownMenuGroup>
                 <DropdownMenuRadioGroup

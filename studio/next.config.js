@@ -3,6 +3,7 @@ const withBundleAnalyzer = require('@next/bundle-analyzer')({
   enabled: process.env.ANALYZE === 'true',
 })
 
+
 // this is required to use shared packages in the packages directory
 const withTM = require('next-transpile-modules')(['ui', 'common', 'shared-data'])
 
@@ -15,7 +16,7 @@ const path = require('path')
 // https://docs.sentry.io/platforms/javascript/guides/nextjs/
 
 const csp = [
-  "frame-ancestors 'none';",
+
   // IS_PLATFORM
   process.env.NEXT_PUBLIC_IS_PLATFORM === 'true' && process.env.NEXT_PUBLIC_ENVIRONMENT === 'prod'
     ? 'upgrade-insecure-requests;'
@@ -54,10 +55,6 @@ const nextConfig = {
       {
         source: '/(.*?)',
         headers: [
-          {
-            key: 'X-Frame-Options',
-            value: 'DENY',
-          },
           {
             key: 'X-Content-Type-Options',
             value: 'no-sniff',

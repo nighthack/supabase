@@ -3,10 +3,10 @@
   "version": "0.0.9",
   "private": true,
   "scripts": {
-    "dev": "next dev -p 8082",
+    "dev": "NODE_OPTIONS=--max_old_space_size=8192 next dev -p 8080",
     "dev:secrets:pull": "AWS_PROFILE=supabase-dev node internals/getSecrets.js",
     "build": "next build",
-    "start": "next start",
+    "start": "next start -p 8080",
     "lint": "next lint",
     "deploy:staging": "VERCEL_ORG_ID=team_E6KJ1W561hMTjon1QSwOh0WO VERCEL_PROJECT_ID=QmcmhbiAtCMFTAHCuGgQscNbke4TzgWULECctNcKmxWCoT vercel --prod -A .vercel/staging.json",
     "typecheck": "tsc --noEmit",

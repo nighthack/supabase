@@ -27,7 +27,12 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
 }
 
 const handleGetAll = async (req: NextApiRequest, res: NextApiResponse) => {
+  const schema = req?.query?.included_schemas;
   const headers = constructHeaders(req.headers)
+  if(schema){
+    headers.included_schemas=schema
+  }
+
 
   const onlyAuthSchema = req.query['schema'] === 'auth'
   const onlyStorageSchema = req.query['schema'] === 'storage'
@@ -35,7 +40,7 @@ const handleGetAll = async (req: NextApiRequest, res: NextApiResponse) => {
   const includeAuthSchema = true // req.query['auth-schema'] === 'true'
   const includeStorageSchema = true // req.query['storage-schema'] === 'true'
 
-  const response = await get(`${PG_META_URL}/tables`, { headers })
+  const response = await get(`${PG_META_URL}/tables?included_schemas=${schema?schema:""}`, { headers })
   if (response.error) {
     return res.status(400).json({ error: response.error })
   }
