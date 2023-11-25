@@ -326,6 +326,7 @@ const TableGridEditor = ({
         schema={selectedTable.schema}
         table={gridTable}
         refreshDocs={refreshDocs}
+        selectedTable={selectedTable as PostgresTable}
         headerActions={
           isTableSelected || isViewSelected || canEditViaTableEditor ? (
             <>

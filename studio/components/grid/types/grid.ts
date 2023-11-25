@@ -2,6 +2,7 @@ import { ForeignRowSelectorProps } from 'components/interfaces/TableGridEditor/S
 import React, { ReactNode } from 'react'
 import { Dictionary } from './base'
 import { SupaRow, SupaTable } from './table'
+import { PostgresTable } from '@supabase/postgres-meta'
 
 export interface GridProps {
   width?: string | number
@@ -13,6 +14,7 @@ export interface GridProps {
 }
 
 export interface SupabaseGridProps {
+  selectedTable:PostgresTable
   /**
    * database table swagger or table name
    */

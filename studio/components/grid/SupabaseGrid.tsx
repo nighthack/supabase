@@ -21,6 +21,8 @@ import Header from './components/header'
 import { RowContextMenu } from './components/menu'
 import { StoreProvider, useDispatch, useTrackedState } from './store'
 import { Dictionary, SupabaseGridProps, SupabaseGridRef } from './types'
+import { ColumnList } from 'components/interfaces/Database'
+import { useTableEditorStateSnapshot } from 'state/table-editor'
 
 /** Supabase Grid: React component to render database table */
 
@@ -51,6 +53,7 @@ const SupabaseGridLayout = forwardRef<SupabaseGridRef, SupabaseGridProps>(
       updateTableRow,
       onEditForeignKeyColumnValue,
       onImportData,
+      selectedTable
     } = props
     const dispatch = useDispatch()
     const state = useTrackedState()
@@ -63,6 +66,8 @@ const SupabaseGridLayout = forwardRef<SupabaseGridRef, SupabaseGridProps>(
     })
     const sorts = formatSortURLParams(sort as string[])
     const filters = formatFilterURLParams(filter as string[])
+
+    const snap = useTableEditorStateSnapshot()
 
     const { project } = useProjectContext()
     const { data, error, isSuccess, isError, isLoading, isRefetching } = useTableRowsQuery(
@@ -168,7 +173,7 @@ const SupabaseGridLayout = forwardRef<SupabaseGridRef, SupabaseGridProps>(
 
     return (
       <div className="sb-grid">
-        <Header
+        {/* <Header
           table={props.table}
           sorts={sorts}
           filters={filters}
@@ -178,12 +183,21 @@ const SupabaseGridLayout = forwardRef<SupabaseGridRef, SupabaseGridProps>(
           onImportData={editable ? onImportData : undefined}
           headerActions={headerActions}
           customHeader={customHeader}
-        />
+        /> */}
         {showCustomChildren && children !== undefined ? (
           <>{children}</>
         ) : (
           <>
-            <Grid
+          <div className='m-2'>
+          <ColumnList
+                table={selectedTable}
+                onAddColumn={snap.onAddColumn}
+                onEditColumn={snap.onEditColumn}
+                onDeleteColumn={snap.onDeleteColumn}  
+                onSelectBack={() => {}}
+                />
+              </div>
+            {/* <Grid
               ref={gridRef}
               {...gridProps}
               rows={data?.rows ?? []}
@@ -197,8 +211,8 @@ const SupabaseGridLayout = forwardRef<SupabaseGridRef, SupabaseGridProps>(
               onAddRow={onAddRow}
               onImportData={onImportData}
               onEditForeignKeyColumnValue={onEditForeignKeyColumnValue}
-            />
-            <Footer isLoading={isLoading || isRefetching} />
+            /> */}
+            {/* <Footer isLoading={isLoading || isRefetching} /> */}
             <Shortcuts gridRef={gridRef} />
           </>
         )}

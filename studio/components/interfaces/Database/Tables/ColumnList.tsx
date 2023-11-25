@@ -67,12 +67,12 @@ const ColumnList = ({
 
       <div className="flex items-center justify-between">
         <div className="flex items-center space-x-4">
-          <Button
+          {/* <Button
             type="outline"
             onClick={() => onSelectBack()}
             icon={<IconChevronLeft size="small" />}
             style={{ padding: '5px' }}
-          />
+          /> */}
           <Input
             size="small"
             placeholder="Filter columns"
