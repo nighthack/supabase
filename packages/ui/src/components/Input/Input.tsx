@@ -96,6 +96,8 @@ function Input({
 
   function onInputChange(e: React.ChangeEvent<HTMLInputElement>) {
     // console.log('input event', e)
+    e.target.value=e.target.value.replace(/ /g, '_').toLowerCase()
+
     if (onChange) onChange(e)
     // update form
     if (formContextOnChange) formContextOnChange(e)

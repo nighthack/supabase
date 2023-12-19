@@ -29,6 +29,7 @@ export async function getTables(
   let queryParams = new URLSearchParams()
   if (schema) queryParams.set('included_schemas', schema)
   const searchStr = queryParams.toString()
+console.log("search param",searchStr)
 
   const response = (await get(
     `${API_URL}/pg-meta/${projectRef}/tables${searchStr ? `?${searchStr}` : ''}`,

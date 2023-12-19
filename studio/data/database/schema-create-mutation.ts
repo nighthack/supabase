@@ -14,6 +14,7 @@ export type SchemaCreateVariables = {
 export async function createSchema({ name, projectRef, connectionString }: SchemaCreateVariables) {
   if (!projectRef) throw new Error('projectRef is required')
   if (!connectionString) throw new Error('Connection string is required')
+  console.log(projectRef,connectionString,'this is create schema')
 
   let headers = new Headers()
   headers.set('x-connection-encrypted', connectionString)

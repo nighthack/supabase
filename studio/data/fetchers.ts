@@ -30,13 +30,15 @@ const {
 export async function constructHeaders(headersInit?: HeadersInit | undefined) {
   const requestId = uuidv4()
   const headers = new Headers(headersInit)
-
+  
   headers.set('X-Request-Id', requestId)
-
+  
   if (!headers.has('Authorization')) {
     const accessToken = await getAccessToken()
+    console.log(accessToken)
     if (accessToken) headers.set('Authorization', `Bearer ${accessToken}`)
   }
+  console.log("in constuct header")
 
   return headers
 }

@@ -81,6 +81,7 @@ const TableList = ({
       },
     }
   )
+  console.log({tables,project},snap.selectedSchemaName)
 
   const publications = meta.publications.list()
   const realtimePublication = publications.find(

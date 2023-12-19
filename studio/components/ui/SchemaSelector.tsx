@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import {
   AlertDescription_Shadcn_,
   AlertTitle_Shadcn_,
@@ -22,6 +22,8 @@ import {
 
 import { useProjectContext } from 'components/layouts/ProjectLayout/ProjectContext'
 import { useSchemasQuery } from 'data/database/schemas-query'
+import { useUrlParamContext } from 'lib/UrlStateProvider'
+import { useRouter } from 'next/router'
 
 interface SchemaSelectorProps {
   className?: string
@@ -40,6 +42,7 @@ const SchemaSelector = ({
   onSelectSchema,
   onSelectCreateSchema,
 }: SchemaSelectorProps) => {
+  const router = useRouter()
   const [open, setOpen] = useState(false)
 
   const { project } = useProjectContext()
@@ -55,7 +58,29 @@ const SchemaSelector = ({
     connectionString: project?.connectionString,
   })
 
-  const schemas = (data ?? []).sort((a, b) => (a.name > b.name ? 0 : -1))
+
+
+  const {schema}=useUrlParamContext()
+useEffect(()=>{
+
+  if (schema&& selectedSchemaName!=schema){
+    console.log("in this ",data)
+    onSelectSchema(schema!)
+    const isFound=(data||[]).find(obj => obj.name == schema)
+    if (!isFound && !isSchemasLoading){
+      router.push(`/invalid/${1}`)
+    }
+    console.log("param test",{schema},data)
+  }
+},[])
+
+
+  
+
+  // const schemas = (data ?? []).sort((a, b) => (a.name > b.name ? 0 : -1))
+  // const schemas = (data ?? []).sort((a, b) => (a.name > b.name ? 0 : -1)).filter(ele=>ele.name==value) //filter as per url 
+  // const schemas ={name:"public"}
+ 
 
   return (
     <div className={className}>
@@ -88,72 +113,76 @@ const SchemaSelector = ({
       )}
 
       {isSchemasSuccess && (
-        <Popover_Shadcn_ open={open} onOpenChange={setOpen} modal={false}>
-          <PopoverTrigger_Shadcn_ asChild>
-            <Button
-              size={size}
-              type="outline"
-              className={`w-full [&>span]:w-full ${size === 'small' ? 'py-1.5' : ''}`}
-              iconRight={
-                <IconCode className="text-foreground-light rotate-90" strokeWidth={2} size={12} />
-              }
-            >
-              <div className="w-full flex space-x-3 py-0.5">
-                <p className="text-xs text-light">schema</p>
-                <p className="text-xs">{selectedSchemaName}</p>
-              </div>
-            </Button>
-          </PopoverTrigger_Shadcn_>
-          <PopoverContent_Shadcn_ className="p-0 w-64" side="bottom" align="start">
-            <Command_Shadcn_>
-              <CommandInput_Shadcn_ placeholder="Find schema..." />
-              <CommandList_Shadcn_>
-                <CommandEmpty_Shadcn_>No schemas found</CommandEmpty_Shadcn_>
-                <CommandGroup_Shadcn_>
-                  <ScrollArea className={(schemas || []).length > 7 ? 'h-[210px]' : ''}>
-                    {schemas?.map((schema) => (
-                      <CommandItem_Shadcn_
-                        key={schema.id}
-                        className="cursor-pointer flex items-center justify-between space-x-2 w-full"
-                        onSelect={() => {
-                          onSelectSchema(schema.name)
-                          setOpen(false)
-                        }}
-                        onClick={() => {
-                          onSelectSchema(schema.name)
-                          setOpen(false)
-                        }}
-                      >
-                        <span>{schema.name}</span>
-                        {schema.name === selectedSchemaName && (
-                          <IconCheck className="text-brand" strokeWidth={2} />
-                        )}
-                      </CommandItem_Shadcn_>
-                    ))}
-                  </ScrollArea>
-                </CommandGroup_Shadcn_>
-                {onSelectCreateSchema !== undefined && (
-                  <CommandGroup_Shadcn_ className="border-t">
-                    <CommandItem_Shadcn_
-                      className="cursor-pointer flex items-center gap-x-2 w-full"
-                      onSelect={() => {
-                        onSelectCreateSchema()
-                        setOpen(false)
-                      }}
-                      onClick={() => {
-                        onSelectCreateSchema()
-                        setOpen(false)
-                      }}
-                    >
-                      <IconPlus />
-                      Create a new schema
-                    </CommandItem_Shadcn_>
-                  </CommandGroup_Shadcn_>
-                )}
-              </CommandList_Shadcn_>
-            </Command_Shadcn_>
-          </PopoverContent_Shadcn_>
-        </Popover_Shadcn_>
+        <div className="w-full flex space-x-3 py-0.5">
+        <p className="text-xs text-light">schema</p>
+        <p className="text-xs">{selectedSchemaName}</p>
+      </div>
+        // <Popover_Shadcn_ open={open} onOpenChange={setOpen} modal={false}>
+        //   <PopoverTrigger_Shadcn_ asChild>
+        //     <Button
+        //       size={size}
+        //       type="outline"
+        //       className={`w-full [&>span]:w-full ${size === 'small' ? 'py-1.5' : ''}`}
+        //       iconRight={
+        //         <IconCode className="text-foreground-light rotate-90" strokeWidth={2} size={12} />
+        //       }
+        //     >
+        //       <div className="w-full flex space-x-3 py-0.5">
+        //         <p className="text-xs text-light">schema</p>
+        //         <p className="text-xs">{selectedSchemaName}</p>
+        //       </div>
+        //     </Button>
+        //   </PopoverTrigger_Shadcn_>
+        //   {/* <PopoverContent_Shadcn_ className="p-0 w-64" side="bottom" align="start">
+        //     <Command_Shadcn_>
+        //       <CommandInput_Shadcn_ placeholder="Find schema..." />
+        //       <CommandList_Shadcn_>
+        //         <CommandEmpty_Shadcn_>No schemas found</CommandEmpty_Shadcn_>
+        //         <CommandGroup_Shadcn_>
+        //           <ScrollArea className={(schemas || []).length > 7 ? 'h-[210px]' : ''}>
+        //             {schemas?.map((schema) => (
+        //               <CommandItem_Shadcn_
+        //                 key={schema.id}
+        //                 className="cursor-pointer flex items-center justify-between space-x-2 w-full"
+        //                 onSelect={() => {
+        //                   onSelectSchema(schema.name)
+        //                   setOpen(false)
+        //                 }}
+        //                 onClick={() => {
+        //                   onSelectSchema(schema.name)
+        //                   setOpen(false)
+        //                 }}
+        //               >
+        //                 <span>{schema.name}</span>
+        //                 {schema.name === selectedSchemaName && (
+        //                   <IconCheck className="text-brand" strokeWidth={2} />
+        //                 )}
+        //               </CommandItem_Shadcn_>
+        //             ))}
+        //           </ScrollArea>
+        //         </CommandGroup_Shadcn_>
+        //         {onSelectCreateSchema !== undefined && (
+        //           <CommandGroup_Shadcn_ className="border-t">
+        //             <CommandItem_Shadcn_
+        //               className="cursor-pointer flex items-center gap-x-2 w-full"
+        //               onSelect={() => {
+        //                 onSelectCreateSchema()
+        //                 setOpen(false)
+        //               }}
+        //               onClick={() => {
+        //                 onSelectCreateSchema()
+        //                 setOpen(false)
+        //               }}
+        //             >
+        //               <IconPlus />
+        //               Create a new schema
+        //             </CommandItem_Shadcn_>
+        //           </CommandGroup_Shadcn_>
+        //         )}
+        //       </CommandList_Shadcn_>
+        //     </Command_Shadcn_>
+        //   </PopoverContent_Shadcn_> */}
+        // </Popover_Shadcn_>
       )}
     </div>
   )

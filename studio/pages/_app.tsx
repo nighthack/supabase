@@ -57,6 +57,7 @@ import { useAppStateSnapshot } from 'state/app-state'
 import { RootStore } from 'stores'
 import HCaptchaLoadedStore from 'stores/hcaptcha-loaded-store'
 import { AppPropsWithLayout } from 'types'
+import { UrlStateProvider } from 'lib/UrlStateProvider'
 
 dayjs.extend(customParseFormat)
 dayjs.extend(utc)
@@ -92,6 +93,7 @@ function CustomApp({ Component, pageProps }: AppPropsWithLayout) {
   const queryClient = useRootQueryClient()
   const snap = useAppStateSnapshot()
   const [rootStore] = useState(() => new RootStore())
+  console.log("this is root store",{rootStore})
 
   // [Joshen] Some issues with using createBrowserSupabaseClient
   const [supabase] = useState(() =>
@@ -175,7 +177,9 @@ function CustomApp({ Component, pageProps }: AppPropsWithLayout) {
                         <CommandMenuWrapper>
                           <AppBannerWrapper>
                             <FeaturePreviewContextProvider>
+                              <UrlStateProvider>
                               {getLayout(<Component {...pageProps} />)}
+                              </UrlStateProvider>
                               <FeaturePreviewModal />
                             </FeaturePreviewContextProvider>
                           </AppBannerWrapper>

@@ -39,7 +39,7 @@ export async function getSchemas(
   if (error) {
     throw error
   }
-
+  console.log("this is in schema-query",data)
   return data
 }
 
